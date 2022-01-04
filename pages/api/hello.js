@@ -14,7 +14,7 @@ handler.post((req, res) => {
     const data = req.body?.toString().split(",")[1];
     const buffer = new Buffer(data, "base64");
     const tmpFilename = "tmp_" + md5(fileName + req.ip) + "." + ext;
-    const uploadPath = path.resolve("./public/");
+    const uploadPath = path.resolve("/tmp");
     if (firstChunk && fs.existsSync(uploadPath + '/' + tmpFilename)) {
       fs.unlinkSync(uploadPath + '/' + tmpFilename);
     }
