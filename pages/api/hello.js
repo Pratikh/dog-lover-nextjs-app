@@ -6,7 +6,7 @@ import path from "path";
 const handler = nc();
 handler.post((req, res) => {
   try {
-    const { name:fileName, currentChunkIndex, totalChunks } = req.query;
+    const { name: fileName, currentChunkIndex, totalChunks } = req.query;
     const firstChunk = parseInt(currentChunkIndex) === 0;
     const lastChunk = parseInt(currentChunkIndex) === parseInt(totalChunks) - 1;
 
@@ -34,20 +34,12 @@ handler.post((req, res) => {
         uploadPath,
       });
     } else {
-      res.json("ok");
+      res.json('ok');
     }
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: JSON.stringify(error),
-      fileName,
-      currentChunkIndex,
-      totalChunks,
-      firstChunk,
-      lastChunk,
-      ext,
-      buffer,
-      uploadPath,
+      error
     });
   }
 });
