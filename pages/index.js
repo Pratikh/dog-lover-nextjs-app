@@ -2,8 +2,14 @@ import styles from "../styles/Home.module.css";
 import Meta from "../components/Meta";
 import Image from "next/image";
 import React from "react";
+import axios from "axios";
 
 export default function Home({ dogList }) {
+
+React.useEffect(()=>{
+  // const url = "/api/hello";
+  // axios.post(url).then(confirm.log)
+},[])
   return (
     <>
       <Meta />

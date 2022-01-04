@@ -14,3 +14,9 @@ a {
 * {
   box-sizing: border-box;
 }
+
+body{
+  background-color: #113;
+  color: #ddd;
+  padding: 20px;
+}
