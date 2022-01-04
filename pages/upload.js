@@ -125,7 +125,7 @@ function App() {
               key={file.name}
               className={uploadStyle.file}
               target="_blank"
-              href={"/uploads/" + file.finalFilename}
+              href={"/public/" + file.finalFilename}
             >
               <div className={uploadStyle["name"]}>{file.name}</div>
               <div
