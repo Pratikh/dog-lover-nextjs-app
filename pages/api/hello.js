@@ -18,6 +18,7 @@ handler.post((req, res) => {
     if (firstChunk && fs.existsSync(uploadPath + '/' + tmpFilename)) {
       fs.unlinkSync(uploadPath + '/' + tmpFilename);
     }
+    
     fs.appendFileSync(uploadPath + '/' + tmpFilename, buffer);
     if (lastChunk) {
       const finalFilename = md5(Date.now()).substr(0, 6) + "." + ext;
