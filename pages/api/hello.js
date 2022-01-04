@@ -19,6 +19,7 @@ handler.post((req, res) => {
       fs.unlinkSync(uploadPath + '/' + tmpFilename);
     }
     fs.appendFileSync(uploadPath + '/' + tmpFilename, buffer);
+    
     if (lastChunk) {
       const finalFilename = md5(Date.now()).substr(0, 6) + "." + ext;
       fs.renameSync(uploadPath + '/' + tmpFilename, uploadPath + finalFilename);
