@@ -6,14 +6,14 @@ import path from "path";
 const handler = nc();
 handler.post((req, res) => {
   try {
-    const { name, currentChunkIndex, totalChunks } = req.query;
+    const { name:fileName, currentChunkIndex, totalChunks } = req.query;
     const firstChunk = parseInt(currentChunkIndex) === 0;
     const lastChunk = parseInt(currentChunkIndex) === parseInt(totalChunks) - 1;
 
-    const ext = name?.split(".").pop();
+    const ext = fileName?.split(".").pop();
     const data = req.body?.toString().split(",")[1];
     const buffer = new Buffer(data, "base64");
-    const tmpFilename = "tmp_" + md5(name + req.ip) + "." + ext;
+    const tmpFilename = "tmp_" + md5(fileName + req.ip) + "." + ext;
     const uploadPath = path.resolve("./public/uploads/");
     if (firstChunk && fs.existsSync(uploadPath + tmpFilename)) {
       fs.unlinkSync(uploadPath + tmpFilename);
@@ -25,7 +25,7 @@ handler.post((req, res) => {
       res.status(200).json({
         success: true,
         finalFilename,
-        name,
+        fileName,
         currentChunkIndex,
         totalChunks,
         firstChunk,
@@ -37,11 +37,10 @@ handler.post((req, res) => {
       res.json("ok");
     }
   } catch (error) {
-    console.error(JSON.stringify(error));
     res.status(500).json({
       success: false,
       message: JSON.stringify(error),
-      name,
+      fileName,
       currentChunkIndex,
       totalChunks,
       firstChunk,
