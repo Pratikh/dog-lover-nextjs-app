@@ -2,7 +2,7 @@ import fs from "fs";
 import md5 from "md5";
 import nc from "next-connect";
 import path from "path";
-const mv = require("mv")
+const mv = require("mv");
 
 const handler = nc();
 handler.post((req, res) => {
@@ -25,12 +25,12 @@ handler.post((req, res) => {
     if (lastChunk) {
       const finalFilename = md5(Date.now()).substr(0, 6) + "." + ext;
       const renamePath = uploadPath + "/" + finalFilename;
-      mv(tempFilePath, renamePath, (error) => {
-        res.status(500).json({
-          success: false,
-          error,
-        });
-      });
+      // mv(tempFilePath, renamePath, (error) => {
+      //   res.status(500).json({
+      //     success: false,
+      //     error,
+      //   });
+      // });
 
       res.status(200).json({
         success: true,
@@ -42,10 +42,10 @@ handler.post((req, res) => {
         lastChunk,
         ext,
         uploadPath,
-        tempFilePath
+        tempFilePath,
       });
     } else {
-      res.json(uploadPath + "/" + tmpFilename);
+      res.json({ lastChunk: true, path: tempFilePath });
     }
   } catch (error) {
     res.status(500).json({
