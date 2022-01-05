@@ -33,6 +33,7 @@ handler.post((req, res) => {
           });
         }
       );
+      
       // fs.renameSync(uploadPath + '/' + tmpFilename, uploadPath + finalFilename);
       res.status(200).json({
         success: true,
