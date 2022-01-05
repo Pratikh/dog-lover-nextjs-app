@@ -2,7 +2,7 @@ import fs from "fs";
 import md5 from "md5";
 import nc from "next-connect";
 import path from "path";
-import mv from "mv";
+const mv = require("mv")
 
 const handler = nc();
 handler.post((req, res) => {
