@@ -2,6 +2,7 @@ import fs from "fs";
 import md5 from "md5";
 import nc from "next-connect";
 import path from "path";
+const mv = require("mv");
 
 const handler = nc();
 handler.post((req, res) => {
@@ -15,14 +16,24 @@ handler.post((req, res) => {
     const buffer = new Buffer(data, "base64");
     const tmpFilename = "tmp_" + md5(fileName + req.ip) + "." + ext;
     const uploadPath = path.resolve("/tmp");
-    if (firstChunk && fs.existsSync(uploadPath + '/' + tmpFilename)) {
-      fs.unlinkSync(uploadPath + '/' + tmpFilename);
+    if (firstChunk && fs.existsSync(uploadPath + "/" + tmpFilename)) {
+      fs.unlinkSync(uploadPath + "/" + tmpFilename);
     }
-    
-    fs.appendFileSync(uploadPath + '/' + tmpFilename, buffer);
+
+    fs.appendFileSync(uploadPath + "/" + tmpFilename, buffer);
     if (lastChunk) {
       const finalFilename = md5(Date.now()).substr(0, 6) + "." + ext;
-      fs.renameSync(uploadPath + '/' + tmpFilename, uploadPath + finalFilename);
+      mv(
+        uploadPath + "/" + tmpFilename,
+        uploadPath + "/" + finalFilename,
+        (error) => {
+          res.status(500).json({
+            success: false,
+            error,
+          });
+        }
+      );
+      // fs.renameSync(uploadPath + '/' + tmpFilename, uploadPath + finalFilename);
       res.status(200).json({
         success: true,
         finalFilename,
@@ -35,20 +46,19 @@ handler.post((req, res) => {
         uploadPath,
       });
     } else {
-      res.json(uploadPath + '/' + tmpFilename);
+      res.json(uploadPath + "/" + tmpFilename);
     }
   } catch (error) {
     res.status(500).json({
       success: false,
-      error
+      error,
     });
   }
 });
 export default handler;
 
-
 // export default function handler(req, res) {
-  // handler.get()
+// handler.get()
 //   const { name, currentChunkIndex, totalChunks } = req.query;
 //   console.log("hello", body);
 
