@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import uploadStyle from "../styles/upload.module.css";
 
-const chunkSize = 10 * 1024;
+const chunkSize = 10 * 10024;
 
 function App() {
   const [dropzoneActive, setDropzoneActive] = useState(false);
