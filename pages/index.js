@@ -3,17 +3,25 @@ import Meta from "../components/Meta";
 import Image from "next/image";
 import React from "react";
 import axios from "axios";
+import Link from "next/link";
 
 export default function Home({ dogList }) {
 
-React.useEffect(()=>{
-  // const url = "/api/hello";
-  // axios.post(url).then(confirm.log)
-},[])
+  React.useEffect(() => {
+    // const url = "/api/hello";
+    // axios.post(url).then(confirm.log)
+  }, [])
   return (
     <>
       <Meta />
       <div className={styles.container}>
+        <header>
+          <div className={styles.header}>
+            <Link href='/upload'>Upload Photo</Link>
+            <Link href='/dogs'>Dog List</Link>
+          </div>
+
+        </header>
         <main className={styles.main}>
           <Image
             width={500}
@@ -35,7 +43,7 @@ React.useEffect(()=>{
             ))}
           </ul>
         </main>
-      </div>
+      </div >
     </>
   );
 }
