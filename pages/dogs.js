@@ -3,7 +3,6 @@ import DogList from '../components/DogList'
 import axios from "axios";
 
 export default function DogsList({ dogData }) {
-    console.log(dogData);
     return (
         <>
             <title>Dogs List</title>
@@ -18,13 +17,11 @@ export default function DogsList({ dogData }) {
 export async function getServerSideProps() {
     var result = await axios.get("https://dog.ceo/api/breeds/list/all");
     var allBreadImage = [];
-    console.log('result');
     Object.keys(result.data.message).map((a) => {
         allBreadImage.push(axios.get("https://dog.ceo/api/breed/" + a + "/images/random"));
     });
 
     var data = await Promise.all(allBreadImage);
-    console.log('result', data.map(a => a.data.message));
     return {
         props: {
             dogData: data.map(a => a.data),

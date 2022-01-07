@@ -10,7 +10,6 @@ function App() {
   const [currentFileIndex, setCurrentFileIndex] = useState(null);
   const [lastUploadedFileIndex, setLastUploadedFileIndex] = useState(null);
   const [currentChunkIndex, setCurrentChunkIndex] = useState(null);
-  console.log("asda");
   function handleDrop(e) {
     e.preventDefault();
     setFiles([...files, ...e.dataTransfer.files]);
