@@ -3,26 +3,16 @@ import Meta from "../components/Meta";
 import Image from "next/image";
 import React from "react";
 import axios from "axios";
-import Link from "next/link";
-
 
 export default function Home({ dogList }) {
-
   React.useEffect(() => {
     // const url = "/api/hello";
     // axios.post(url).then(confirm.log)
-  }, [])
+  }, []);
   return (
     <>
       <Meta />
       <div className={styles.container}>
-        <header>
-          <div className={styles.header}>
-            <Link href='/upload'>Upload Photo</Link>
-            <Link href='/dogs'>Dog List</Link>
-          </div>
-
-        </header>
         <main className={styles.main}>
           <Image
             width={500}
@@ -44,7 +34,7 @@ export default function Home({ dogList }) {
             ))}
           </ul>
         </main>
-      </div >
+      </div>
     </>
   );
 }
@@ -54,9 +44,11 @@ export default function Home({ dogList }) {
 export async function getServerSideProps() {
   const result = await fetch("https://dog.ceo/api/breeds/list/all");
   const json = await result.json();
-
+  const menu = await axios.get("https://api.artoreal.com/rest/V1/menu");
+  console.log(menu);
   return {
     props: {
+      menuData: menu.data,
       dogList: json.message,
     },
   };
