@@ -54,9 +54,11 @@ export async function getStaticProps(context) {
     result.data.map((a) => a.sku).join() +
     "&searchCriteria[filterGroups][0][filters][0][condition_type]=in&searchCriteria[sortOrders][0][field]=name&searchCriteria[sortOrders][0][direction]=ASC&searchCriteria[currentPage]=1&searchCriteria[pageSize]=50&%20%20%20%20fields=items[id,name,qty,sku,type_id,price,media_gallery_entries,extension_attributes[seller_name,product_url,is_saleable,min_customization_price,is_limited_edition]],total_count";
   const productList = await axios.get(data);
+  const menu = await axios.get("https://api.artoreal.com/rest/V1/menu");
   return {
     props: {
       productList: productList.data.items,
+      menuData: menu.data,
       message: "done",
     },
     revalidate: 60 * 60,
