@@ -5,10 +5,6 @@ import React from "react";
 import axios from "axios";
 
 export default function Home({ dogList }) {
-  React.useEffect(() => {
-    // const url = "/api/hello";
-    // axios.post(url).then(confirm.log)
-  }, []);
   return (
     <>
       <Meta />
@@ -44,11 +40,10 @@ export default function Home({ dogList }) {
 export async function getServerSideProps() {
   const result = await fetch("https://dog.ceo/api/breeds/list/all");
   const json = await result.json();
-  // const menu = await axios.get("https://api.artoreal.com/rest/V1/menu");
-  // console.log(menu);
+  const menu = await axios.get("https://api.artoreal.com/rest/V1/menu");
   return {
     props: {
-      // menuData: menu.data,
+      menuData: menu.data,
       dogList: json.message,
     },
   };

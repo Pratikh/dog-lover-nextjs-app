@@ -26,10 +26,12 @@ export async function getStaticProps() {
     );
   });
 
+  const menu = await axios.get("https://api.artoreal.com/rest/V1/menu");
   var data = await Promise.all(allBreadImage);
   return {
     props: {
       dogData: data.map((a) => a.data),
+      menuData: menu.data,
     },
     revalidate: 60 * 60,
   };

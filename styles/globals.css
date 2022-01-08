@@ -34,3 +34,10 @@ body{
   animation: deanimate-on-hover .3s;
   animation-fill-mode: forwards;
 }
+
+
+.parentList {
+  display: flex;
+  gap: 111px;
+  position: absolute;
+}
