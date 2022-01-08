@@ -17,7 +17,7 @@ export default function ProductsList({ productList, message }) {
   );
 }
 
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
   var result = await axios.get(
     "https://api.artoreal.com/rest/V1/lof-producttags/products/" +
       context.params.id
