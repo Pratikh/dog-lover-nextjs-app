@@ -3,7 +3,6 @@ import Navigation from "../components/Navigation";
 import axios from "axios";
 
 function MyApp({ Component, pageProps,...rest }) {
-  console.log(pageProps,rest);
   return (
     <>
       <Navigation />
