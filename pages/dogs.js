@@ -1,6 +1,7 @@
 import React from "react";
 import DogList from "../components/DogList";
 import axios from "axios";
+var Jimp = require("jimp");
 
 export default function DogsList({ dogData }) {
   return (
@@ -28,9 +29,28 @@ export async function getStaticProps() {
 
   const menu = await axios.get("https://api.artoreal.com/rest/V1/menu");
   var data = await Promise.all(allBreadImage);
+  const dogsArray = data.map((a) => a.data);
+  const finalData = [];
+  const arrayOfPromise = [];
+  dogsArray.forEach((a) => {
+    console.log(a);
+    const promise = new Promise((resolve) => {
+      Jimp.read(a.message).then((data) => {
+        const tempData = {
+          width: data.bitmap.width,
+          height: data.bitmap.height,
+          src: a.message,
+        };
+        finalData.push(tempData);
+        resolve();
+      });
+    });
+    arrayOfPromise.push(promise);
+  });
+  await Promise.all(arrayOfPromise);
   return {
     props: {
-      dogData: data.map((a) => a.data),
+      dogData: finalData,
       menuData: menu.data,
     },
     revalidate: 60 * 60,

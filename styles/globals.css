@@ -19,6 +19,7 @@ body {
   background-color: #113;
   color: #ddd;
   padding: 20px;
+  overflow-x: hidden;
 }
 
 .card {
@@ -46,4 +47,12 @@ body {
   padding: 10px;
   background-color: rgb(48 48 52);
   color: white;
+}
+
+.motionDivImage {
+  padding: 10px;
+  background-color: #b1a7a7;
+}
+.motionDivImage:hover {
+  z-index: 1;
 }
