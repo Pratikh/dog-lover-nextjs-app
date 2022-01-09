@@ -37,9 +37,7 @@ function App() {
     params.set("currentChunkIndex", currentChunkIndex);
     params.set("totalChunks", Math.ceil(file.size / chunkSize));
     const headers = { "Content-Type": "application/octet-stream" };
-    // const url = "http://localhost:4001/upload?" + params.toString();
     const url = "/api/hello?" + params.toString();
-    // axios.get(url, data, { headers }).then(console.log);
     axios.post(url, JSON.stringify(data), { headers }).then((response) => {
       const file = files[currentFileIndex];
       const filesize = files[currentFileIndex].size;

@@ -10,7 +10,6 @@ export default function DogList({ productList, message, ...rest }) {
   if (!productList && !message) {
     return <h1>Loading data</h1>;
   }
-  console.log({ productList });
   if (message === "done" && !productList?.length) {
     return <h1>Sorry no product found</h1>;
   }
@@ -30,6 +29,13 @@ export default function DogList({ productList, message, ...rest }) {
                     "https://a2pbecdn.artoreal.com/catalog/product" +
                     a.media_gallery_entries[0].file
                   }
+                  placeholder="blur"
+                  blurDataURL={`${
+                    "https://a2pbecdn.artoreal.com/catalog/product" +
+                    a.media_gallery_entries[0].file
+                  }?width=${parseInt(
+                    (a.imageProps.width * 1) / 100
+                  )}&height=${parseInt((a.imageProps.height * 1) / 100)}`}
                   alt={a.name}
                 />
                 <Link

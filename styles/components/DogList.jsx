@@ -1,7 +1,6 @@
 import React from 'react'
 
 export default function DogList({ dogData, ...rest }) {
-    console.log(dogData, rest);
     if (!dogData) {
         return <></>
     }
