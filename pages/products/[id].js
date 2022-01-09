@@ -2,6 +2,7 @@ import React from "react";
 import Products from "../../components/Products";
 import axios from "axios";
 import { useRouter } from "next/router";
+var Jimp = require("jimp");
 
 export default function ProductsList({ productList, message }) {
   const router = useRouter();
@@ -53,11 +54,30 @@ export async function getStaticProps(context) {
     "https://api.artoreal.com/rest/V1/products?&searchCriteria[filterGroups][3][filters][1][field]=status&searchCriteria[filterGroups][3][filters][1][value]=1&searchCriteria[filterGroups][0][filters][0][field]=entity_id&searchCriteria[filterGroups][0][filters][0][value]=" +
     result.data.map((a) => a.sku).join() +
     "&searchCriteria[filterGroups][0][filters][0][condition_type]=in&searchCriteria[sortOrders][0][field]=name&searchCriteria[sortOrders][0][direction]=ASC&searchCriteria[currentPage]=1&searchCriteria[pageSize]=50&%20%20%20%20fields=items[id,name,qty,sku,type_id,price,media_gallery_entries,extension_attributes[seller_name,product_url,is_saleable,min_customization_price,is_limited_edition]],total_count";
-  const productList = await axios.get(data);
+  let productList = await axios.get(data);
+  productList = productList.data.items;
+  productList.forEach((item) => {});
   const menu = await axios.get("https://api.artoreal.com/rest/V1/menu");
+  const arrayOfPromise = [];
+  productList.forEach((a) => {
+    const promise = new Promise((resolve) => {
+      Jimp.read(
+        "https://a2pbecdn.artoreal.com/catalog/product" +
+          a.media_gallery_entries[0].file
+      ).then((data) => {
+        a.imageProps = {
+          width: data.bitmap.width,
+          height: data.bitmap.height,
+        };
+        resolve();
+      });
+    });
+    arrayOfPromise.push(promise);
+  });
+  const waitForPromise = await Promise.all(arrayOfPromise);
   return {
     props: {
-      productList: productList.data.items,
+      productList: productList,
       menuData: menu.data,
       message: "done",
     },

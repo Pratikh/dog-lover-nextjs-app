@@ -9,20 +9,21 @@
     "export": "next build && next export"
   },
   "dependencies": {
-    "aos": "latest",
     "axios": "latest",
-    "body-parser": "latest",
-    "cors": "latest",
-    "md5": "latest",
-    "multer": "latest",
     "next": "latest",
     "next-connect": "latest",
     "next-pwa": "latest",
     "react": "latest",
     "react-dom": "latest",
+    "react-masonry-css": "^1.0.16",
     "react-responsive-masonry": "latest"
   },
   "devDependencies": {
+    "body-parser": "latest",
+    "cors": "latest",
+    "md5": "latest",
+    "multer": "latest",
+    "jimp": "^0.16.1",
     "eslint": "latest",
     "eslint-config-next": "latest"
   }
